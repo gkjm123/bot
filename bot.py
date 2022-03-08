@@ -30,14 +30,35 @@ async def on_message(message):
         r = message.guild.get_role(int(invite_role))
         mem = await message.guild.fetch_member(message.author.id)
         list = await message.guild.invites()
+        count = 0
         for i in list:
             if i.inviter.id == message.author.id:
-                await message.channel.send(message.author.name + "님은 지금까지 " + str(i.uses) + "명을 초대했습니다.")
-                if i.uses >= int(number) and r not in mem.roles:
-                    await mem.add_roles(r)
-                    await message.channel.send(str(number) + "명을 초대해 " + r.name + " 역할이 되셨습니다.")
-                return
-        await message.channel.send("아직 생성한 초대코드가 없습니다. 초대코드를 생성후 멤버를 불러보세요.")
+                count += i.uses
+        await message.channel.send(message.author.name + "님은 지금까지 " + str(count) + "명을 초대했습니다.")
+        if count >= int(number) and r not in mem.roles:
+            await mem.add_roles(r)
+            await message.channel.send(str(number) + "명을 초대해 " + r.name + " 역할이 되셨습니다.")
+
+    if message.content.startswith("/순위"):
+        list = await message.guild.invites()
+        ls = {}
+        for i in list:
+            try:
+                if ls[i.inviter.id]:
+                    c1 = ls[i.inviter.id]
+                    ls[i.inviter.id] = c1 + i.uses
+            except:
+                ls[i.inviter.id] = i.uses
+
+        ls = sorted(ls.items(), key=operator.itemgetter(1), reverse=True)
+        l = ""
+        try:
+            for i in range(10):
+                mem = await message.guild.fetch_member(ls[i][0])
+                l = l + str(i + 1) + ". " + mem.name + " - " + str(ls[i][1]) + "명\n"
+        except:
+            pass
+        await message.channel.send(l)
 
     if message.content.startswith("/인증"):
         r = message.guild.get_role(int(list_role))
