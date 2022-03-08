@@ -4,6 +4,14 @@ import discord
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
+option = configparser.ConfigParser()
+option.read("setting.ini", encoding="utf-8")
+token = option["setting"]["token"]
+number = option["setting"]["number"]
+invite_role = option["setting"]["invite_role"]
+list_role = option["setting"]["list_role"]
+channel = option["setting"]["channel"]
+
 
 @client.event
 async def on_ready():
@@ -14,10 +22,6 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.content != "" and message.channel.id == int(channel):
-        with open('chat.txt', 'a', encoding='utf-8') as f:
-            f.write(message.author.name+"#"+message.author.discriminator+" : "+message.content+"\n\n")
-
     if message.content.startswith("/초대"):
         r = message.guild.get_role(int(invite_role))
         mem = await message.guild.fetch_member(message.author.id)
@@ -44,4 +48,4 @@ async def on_message(message):
                     await message.channel.send("이미 인증되어 역할이 부여되었습니다.")
 
 
-client.run("OTUwMjg1NDUyMjQ0NTU3OTM0.YiWsSw.xKz4sCeeHzfozLfyxSzWh9dmfAE")
+client.run(token)
