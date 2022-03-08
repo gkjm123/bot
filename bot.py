@@ -24,12 +24,15 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content != "" and message.channel.id == int(channel):
-        with open('chat.txt', 'a') as f:
-            f.write("1")
-            
-    if message.content.startswith("/대화"):
-        with open('chat.txt', 'r', encoding='utf-8') as f:
-            await message.channel.send(f.read()[0:100])
+        with open('chat.txt', 'a', encoding='utf-8') as f:
+            f.write(message.author.name + " : " + message.content+"\n\n")
+
+    if message.content.startswith("/채팅"):
+        await message.channel.send(file=discord.File('chat.txt'))
+
+    if message.content.startswith("/삭제"):
+        with open('chat.txt', 'w', encoding='utf-8') as f:
+            f.write("")
 
     if message.content.startswith("/초대"):
         r = message.guild.get_role(int(invite_role))
