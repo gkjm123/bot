@@ -11,4 +11,4 @@ async def on_ready():
     print('------------------------')
 
 
-client.run("OTUwMjM1ODM5NjU5NjUxMTg1.YiV-Fg.861iJXkK4WPPLgG59drfjFjoeCU")
+client.run("OTUwMjM1ODM5NjU5NjUxMTg1.YiV-Fg.odMX6p6_30_UG3UwPwU-szpWlb0")
