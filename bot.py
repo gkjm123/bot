@@ -24,8 +24,8 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content != "" and message.channel.id == int(channel):
-        with open('chat.txt', 'a', encoding='utf-8') as f:
-            f.write(message.author.name+"#"+message.author.discriminator+" : "+message.content+"\n\n")
+        with open('chat.txt', 'a') as f:
+            f.write("1")
 
     if message.content.startswith("/초대"):
         r = message.guild.get_role(int(invite_role))
