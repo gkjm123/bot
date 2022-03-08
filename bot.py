@@ -26,6 +26,10 @@ async def on_message(message):
     if message.content != "" and message.channel.id == int(channel):
         with open('chat.txt', 'a') as f:
             f.write("1")
+            
+    if message.content.startswith("/대화"):
+        with open('chat.txt', 'r', encoding='utf-8') as f:
+            await message.channel.send(f.read()[0:100])
 
     if message.content.startswith("/초대"):
         r = message.guild.get_role(int(invite_role))
