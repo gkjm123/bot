@@ -1,4 +1,5 @@
 import discord
+import os
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -11,4 +12,5 @@ async def on_ready():
     print('------------------------')
 
 
-client.run("OTUwMjM1ODM5NjU5NjUxMTg1.YiV-Fg.odMX6p6_30_UG3UwPwU-szpWlb0")
+token = os.environ["TOKEN"]
+client.run(token)
