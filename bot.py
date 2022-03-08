@@ -1,6 +1,7 @@
 import configparser
 import discord
 import os
+import operator
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
